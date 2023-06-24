@@ -1,79 +1,91 @@
-import { FC, useEffect, useState } from 'react'
-import hackathon from '../hackathon.png'
-import Results from './Results'
-import axios, { AxiosResponse } from 'axios'
+import { FC, useEffect, useState } from "react";
+import hackathon from "../hackathon.png";
+import Results from "./Results";
+import axios, { AxiosResponse } from "axios";
 
 interface Input {
-  subject: string
-  level: string
-  method: string
+  subject: string;
+  level: string;
+  method: string;
 }
 
 interface Result {
-  coveringPoints: string[]
-  pointDetails: { [key: string]: string }
-  realWorld: { [key: string]: string }
+  coveringPoints: string[];
+  pointDetails: { [key: string]: string };
+  realWorld: { [key: string]: string };
 }
 
 const Chat: FC = () => {
   const [input, setInput] = useState<Input>({
-    subject: '',
-    level: '',
-    method: '',
-  })
+    subject: "",
+    level: "",
+    method: "",
+  });
 
   const [response, setResponse] = useState<Result>({
-    coveringPoints: ['sdfsdf', 'slkjsdlf', 'sdflskjdf'],
-    pointDetails: { key: 'value', key1: 'value1' },
-    realWorld: { key: 'value', key1: 'value1' },
-  })
-  const [error, setError] = useState<Error | null>(null)
-  const [loading, setLoading] = useState(false)
+    coveringPoints: ["sdfsdf", "slkjsdlf", "sdflskjdf"],
+    pointDetails: { key: "value", key1: "value1" },
+    realWorld: { key: "value", key1: "value1" },
+  });
+  const [error, setError] = useState<Error | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true)
+  const fetchData = async (input: Input) => {
+    setLoading(true);
 
-      try {
-        const response: AxiosResponse<Result> = await axios.get(
-          'https://api.example.com/data'
-        )
-        setResponse(response.data)
-      } catch (error: any) {
-        setError(error)
-      }
-
-      setLoading(false)
+    try {
+      const response: AxiosResponse<Result> = await axios.post(
+        "http://localhost:3001/api/prompt",
+        input
+      );
+      setResponse(response.data);
+    } catch (error: any) {
+      setError(error);
     }
 
-    fetchData()
-  }, [])
+    setLoading(false);
+  };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     setLoading(true);
 
+  //     try {
+  //       const response: AxiosResponse<Result> = await axios.post(
+  //         "http://localhost:3001/api/prompt",
+  //         input
+  //       );
+  //       setResponse(response.data);
+  //     } catch (error: any) {
+  //       setError(error);
+  //     }
+
+  //     setLoading(false);
+  //   };
+
+  //   fetchData();
+  // }, []);
+ const sendMessage = () => {
+    fetchData(input)
+  };
   if (loading) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
 
-  if (error) {
-    return <div>Error: {error.message}</div>
-  }
+  // if (error) {
+  //   return <div>Error: {error.message}</div>;
+  // }
 
-  const sendMessage = () => {
-    setInput({
-      subject: input.subject,
-      level: input.level,
-      method: input.method,
-    })
-  }
+ 
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target
-    setInput((prev) => ({ ...prev, [name]: value }))
-  }
+    const { name, value } = event.target;
+    setInput((prev) => ({ ...prev, [name]: value }));
+  };
 
   return (
     <div>
       <div>
-        <img src={hackathon} alt='hackathon' style={{ height: '100px' }} />
+        <img src={hackathon} alt="hackathon" style={{ height: "100px" }} />
         {/* {messages.map((message, index) => (
           <p key={index}>
             <strong>{message.user}: </strong>
@@ -83,33 +95,33 @@ const Chat: FC = () => {
       </div>
 
       <input
-        name='subject'
+        name="subject"
         value={input.subject}
         onChange={handleInputChange}
-        type='text'
-        placeholder='Subject'
+        type="text"
+        placeholder="Subject"
       />
 
       <input
-        name='level'
+        name="level"
         value={input.level}
         onChange={handleInputChange}
-        type='text'
-        placeholder='Level'
+        type="text"
+        placeholder="Level"
       />
 
       <input
-        name='method'
+        name="method"
         value={input.method}
         onChange={handleInputChange}
-        type='text'
-        placeholder='Method'
+        type="text"
+        placeholder="Method"
       />
       <button onClick={sendMessage}>Send</button>
 
       {response !== null && <Results response={response} />}
     </div>
-  )
-}
+  );
+};
 
-export default Chat
+export default Chat;
