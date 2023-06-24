@@ -1,11 +1,12 @@
-import React from 'react'
 import './App.css'
-import Chat from './Chat'
+import Chat from './components/Chat'
+// import Results from './components/Results'
 
 function App() {
   return (
     <div className='App'>
       <Chat />
+      {/* <Results /> */}
     </div>
   )
 }
