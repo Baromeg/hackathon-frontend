@@ -48,7 +48,7 @@ const Chat: FC = () => {
     },
   }
 
-  const [response, setResponse] = useState<Result>(inputTemplate)
+  const [response, setResponse] = useState<Result>(inputEmpty)
 
   const [error, setError] = useState<Error | null>(null)
 
