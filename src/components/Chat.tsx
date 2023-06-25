@@ -56,7 +56,10 @@ const Chat: FC = () => {
 
   const fetchData = async (input: Input) => {
     setLoading(true)
-
+    localStorage.setItem('subject', JSON.stringify(input.subject))
+    localStorage.setItem('audience', JSON.stringify(input.audience))
+    localStorage.setItem('context', JSON.stringify(input.context))
+    localStorage.setItem('intent', JSON.stringify(input.intent))
     try {
       const res: AxiosResponse<Result> = await axios.post(
         'http://localhost:3001/api/prompt',
@@ -73,10 +76,7 @@ const Chat: FC = () => {
   const handleInputChange = (data: Input) => {
     console.log(data)
     // Storing data into local storage
-    localStorage.setItem('subject', data.subject)
-    localStorage.setItem('audience', data.audience)
-    localStorage.setItem('context', data.context)
-    localStorage.setItem('intent', data.intent)
+
     fetchData(data)
   }
 

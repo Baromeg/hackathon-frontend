@@ -8,6 +8,7 @@ import MuiAccordionDetails from '@mui/material/AccordionDetails'
 import Typography, { TypographyProps } from '@mui/material/Typography'
 import { FC, useState } from 'react'
 import { Button, CircularProgress } from '@mui/material'
+import { log } from 'console'
 
 interface Input {
   subject: string
@@ -69,11 +70,28 @@ export const CustomAccordion: FC<CustomAccordionProps> = ({
   fetchData,
 }) => {
   const context = localStorage.getItem('context')
-
   const intent = localStorage.getItem('intent')
-
   const audience = localStorage.getItem('audience')
 
+  let parsedContext = '',
+    parsedIntent = '',
+    parsedAudience = ''
+
+  try {
+    parsedContext = context !== null ? JSON.parse(context) : ''
+    parsedIntent = intent !== null ? JSON.parse(intent) : ''
+    parsedAudience = audience !== null ? JSON.parse(audience) : ''
+  } catch (e) {
+    console.error('Error parsing JSON from local storage', e)
+    // Consider handling this error more gracefully in your app
+  }
+
+  const dataToFetch = {
+    subject: heading,
+    context: parsedContext,
+    intent: parsedIntent,
+    audience: parsedAudience,
+  }
   return (
     <Accordion expanded={expanded} onChange={onClick}>
       <AccordionSummary aria-controls='accordion-content' id='accordion-header'>
@@ -87,12 +105,9 @@ export const CustomAccordion: FC<CustomAccordionProps> = ({
             variant='contained'
             color='primary'
             onClick={() => {
-              fetchData({
-                subject: heading,
-                context: context !== null ? JSON.parse(context) : '',
-                intent: intent !== null ? JSON.parse(intent) : '',
-                audience: audience !== null ? JSON.parse(audience) : '',
-              })
+              console.log({ context, intent, audience })
+
+              fetchData(dataToFetch)
             }}
             // disabled={loading}
           >
