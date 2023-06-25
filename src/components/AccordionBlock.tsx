@@ -23,6 +23,7 @@ interface CustomAccordionProps {
   content: string
   TypographyProps: TypographyProps
   fetchData: (input: Input) => Promise<void>
+  loading: boolean
 }
 
 const Accordion = styled((props: AccordionProps) => (
@@ -68,6 +69,7 @@ export const CustomAccordion: FC<CustomAccordionProps> = ({
   content,
   TypographyProps,
   fetchData,
+  loading,
 }) => {
   const context = localStorage.getItem('context')
   const intent = localStorage.getItem('intent')
@@ -109,12 +111,9 @@ export const CustomAccordion: FC<CustomAccordionProps> = ({
 
               fetchData(dataToFetch)
             }}
-            // disabled={loading}
+            disabled={loading}
           >
-            {
-              // loading ? <CircularProgress size={24} /> :
-              'Know More'
-            }
+            {loading ? <CircularProgress size={24} /> : 'Know More'}
           </Button>
         </div>
       </AccordionDetails>

@@ -103,7 +103,7 @@ const Chat: FC = () => {
       {error && <i>{error.message}</i>}
 
       {response?.coveringPoints.length > 0 && (
-        <Results fetchData={fetchData} response={response} />
+        <Results loading={loading} fetchData={fetchData} response={response} />
       )}
     </div>
   )

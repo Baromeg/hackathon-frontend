@@ -15,6 +15,7 @@ interface ResultProps {
     realWorld: { [key: string]: string }
   }
   fetchData: (input: Input) => Promise<void>
+  loading: boolean
 }
 
 const Results: FC<ResultProps> = (props) => {
@@ -29,6 +30,7 @@ const Results: FC<ResultProps> = (props) => {
   const pointDetails = props.response.pointDetails
   const realWorld = props.response.realWorld
   const fetchData = props.fetchData
+  const loading = props.loading
 
   return (
     <div className='container'>
@@ -42,6 +44,7 @@ const Results: FC<ResultProps> = (props) => {
           content={value}
           TypographyProps={{ variant: 'body1' }}
           fetchData={fetchData}
+          loading={loading}
         />
       ))}
       <h3>Real world examples</h3>
@@ -54,6 +57,7 @@ const Results: FC<ResultProps> = (props) => {
             content={value}
             TypographyProps={{ variant: 'body1' }}
             fetchData={fetchData}
+            loading={loading}
           />
         ))}
     </div>
