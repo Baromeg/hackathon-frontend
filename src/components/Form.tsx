@@ -26,6 +26,7 @@ const Form: FC<FormProps> = ({ handleInputChange, loading }) => {
   const {
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm<FormData>()
 
@@ -48,6 +49,7 @@ const Form: FC<FormProps> = ({ handleInputChange, loading }) => {
           display: 'flex',
           flexDirection: 'column',
           gap: '1rem',
+          width: ' 70%',
         }}
         onSubmit={handleSubmit(onSubmit)}
       >

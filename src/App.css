@@ -16,7 +16,7 @@ body {
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 40px;
+  padding: 0 60px 40px 60px;
 }
 
 /* Define styles for navigation */

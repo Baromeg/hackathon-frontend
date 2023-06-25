@@ -73,6 +73,25 @@ const Chat: FC = () => {
     setLoading(false)
   }
 
+  const fetchDataNext = async (input: Input) => {
+    setLoading(true)
+    localStorage.setItem('subject', JSON.stringify(input.subject))
+    localStorage.setItem('audience', JSON.stringify(input.audience))
+    localStorage.setItem('context', JSON.stringify(input.context))
+    localStorage.setItem('intent', JSON.stringify(input.intent))
+    try {
+      const res: AxiosResponse<Result> = await axios.post(
+        'http://localhost:3001/api/prompt/next',
+        input
+      )
+      setResponse(res.data)
+    } catch (err: any) {
+      setError(err)
+    }
+
+    setLoading(false)
+  }
+
   const handleInputChange = (data: Input) => {
     console.log(data)
     // Storing data into local storage
@@ -103,7 +122,11 @@ const Chat: FC = () => {
       {error && <i>{error.message}</i>}
 
       {response?.coveringPoints.length > 0 && (
-        <Results loading={loading} fetchData={fetchData} response={response} />
+        <Results
+          loading={loading}
+          fetchData={fetchDataNext}
+          response={response}
+        />
       )}
     </div>
   )
