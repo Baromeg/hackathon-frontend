@@ -16,26 +16,29 @@ const Results: FC<ResultProps> = (props) => {
   return (
     <div>
       <div>
-        {coveringPoints.map((topic, index) => (
-          <p key={index}>
-            <strong>{topic} </strong>
-          </p>
-        ))}
+        {coveringPoints &&
+          coveringPoints.map((topic, index) => (
+            <p key={index}>
+              <strong>{topic} </strong>
+            </p>
+          ))}
       </div>
       <div>
-        {Object.entries(pointDetails).map(([key, value]) => (
-          <li key={key}>
-            <strong>{key}:</strong> {value}
-          </li>
-        ))}
+        {coveringPoints &&
+          Object.entries(pointDetails).map(([key, value]) => (
+            <li key={key}>
+              <strong>{key}:</strong> {value}
+            </li>
+          ))}
       </div>
 
       <div>
-        {Object.entries(realWorld).map(([key, value]) => (
-          <li key={key}>
-            <strong>{key}:</strong> {value}
-          </li>
-        ))}
+        {coveringPoints &&
+          Object.entries(realWorld).map(([key, value]) => (
+            <li key={key}>
+              <strong>{key}:</strong> {value}
+            </li>
+          ))}
       </div>
     </div>
   )
