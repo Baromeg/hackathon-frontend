@@ -113,7 +113,7 @@ export const CustomAccordion: FC<CustomAccordionProps> = ({
             }}
             disabled={loading}
           >
-            {loading ? <CircularProgress size={24} /> : 'Know More'}
+            {loading ? <CircularProgress size={24} /> : 'Learn More'}
           </Button>
         </div>
       </AccordionDetails>

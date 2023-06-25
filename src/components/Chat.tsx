@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react'
-import hackathon from '../hackathon.png'
+import hackathon from '../logoNew.png'
 import Results from './Results'
 import axios, { AxiosResponse } from 'axios'
 import Form from './Form'
@@ -109,16 +109,16 @@ const Chat: FC = () => {
           alignItems: 'center',
         }}
       >
-        <h1>Hey adventurer! </h1>
+        {/* <h1>Oraccuull AI</h1> */}
         <div>
-          <img src={hackathon} alt='hackathon' style={{ height: '100px' }} />
+          <img src={hackathon} alt='hackathon' style={{ height: '200px' }} />
         </div>
         <h2>What would you like to learn?</h2>
       </div>
 
       <Form handleInputChange={handleInputChange} loading={loading} />
 
-      {loading && <div>Loading...</div>}
+      {/* {loading && <div>Loading...</div>} */}
       {error && <i>{error.message}</i>}
 
       {response?.coveringPoints.length > 0 && (
