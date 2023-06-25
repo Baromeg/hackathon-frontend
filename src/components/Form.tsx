@@ -23,7 +23,11 @@ interface FormProps {
 }
 // @ts-ignore: Unreachable code error
 const Form: FC<FormProps> = ({ handleInputChange, loading }) => {
-  const { handleSubmit, control } = useForm<FormData>()
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<FormData>()
 
   const onSubmit = (data: FormData) => {
     handleInputChange(data)
@@ -52,7 +56,7 @@ const Form: FC<FormProps> = ({ handleInputChange, loading }) => {
           control={control}
           defaultValue=''
           render={({ field }) => (
-            <TextField {...field} label='Subject' variant='outlined' required />
+            <TextField {...field} label='Subject' variant='standard' required />
           )}
         />
         <div>
@@ -62,6 +66,7 @@ const Form: FC<FormProps> = ({ handleInputChange, loading }) => {
               name='context'
               control={control}
               defaultValue=''
+              rules={{ required: 'Context is required' }}
               render={({ field }) => (
                 <RadioGroup row {...field}>
                   <FormControlLabel
@@ -82,6 +87,9 @@ const Form: FC<FormProps> = ({ handleInputChange, loading }) => {
                 </RadioGroup>
               )}
             />
+            {errors.context && (
+              <span style={{ color: 'red' }}>{errors.context.message}</span>
+            )}
           </FormControl>
         </div>
         <div>
@@ -91,6 +99,7 @@ const Form: FC<FormProps> = ({ handleInputChange, loading }) => {
               name='intent'
               control={control}
               defaultValue=''
+              rules={{ required: 'Intent is required' }}
               render={({ field }) => (
                 <RadioGroup row {...field}>
                   <FormControlLabel
@@ -106,6 +115,9 @@ const Form: FC<FormProps> = ({ handleInputChange, loading }) => {
                 </RadioGroup>
               )}
             />
+            {errors.intent && (
+              <span style={{ color: 'red' }}>{errors.intent.message}</span>
+            )}
           </FormControl>
         </div>
         <div>
@@ -115,6 +127,7 @@ const Form: FC<FormProps> = ({ handleInputChange, loading }) => {
               name='audience'
               control={control}
               defaultValue=''
+              rules={{ required: 'Audience is required' }}
               render={({ field }) => (
                 <RadioGroup row {...field}>
                   <FormControlLabel
@@ -135,6 +148,9 @@ const Form: FC<FormProps> = ({ handleInputChange, loading }) => {
                 </RadioGroup>
               )}
             />
+            {errors.audience && (
+              <span style={{ color: 'red' }}>{errors.audience.message}</span>
+            )}
           </FormControl>
         </div>
 

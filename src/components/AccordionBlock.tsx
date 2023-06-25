@@ -6,14 +6,22 @@ import MuiAccordionSummary, {
 } from '@mui/material/AccordionSummary'
 import MuiAccordionDetails from '@mui/material/AccordionDetails'
 import Typography, { TypographyProps } from '@mui/material/Typography'
-import { FC } from 'react'
+import { FC, useState } from 'react'
+import { Button, CircularProgress } from '@mui/material'
 
+interface Input {
+  subject: string
+  context: string
+  intent: string
+  audience: string
+}
 interface CustomAccordionProps {
   expanded: boolean
   onClick: (event: React.SyntheticEvent, newExpanded: boolean) => void
   heading: string
   content: string
   TypographyProps: TypographyProps
+  fetchData: (input: Input) => Promise<void>
 }
 
 const Accordion = styled((props: AccordionProps) => (
@@ -58,7 +66,14 @@ export const CustomAccordion: FC<CustomAccordionProps> = ({
   heading,
   content,
   TypographyProps,
+  fetchData,
 }) => {
+  const context = localStorage.getItem('context')
+
+  const intent = localStorage.getItem('intent')
+
+  const audience = localStorage.getItem('audience')
+
   return (
     <Accordion expanded={expanded} onChange={onClick}>
       <AccordionSummary aria-controls='accordion-content' id='accordion-header'>
@@ -66,6 +81,27 @@ export const CustomAccordion: FC<CustomAccordionProps> = ({
       </AccordionSummary>
       <AccordionDetails>
         <Typography>{content}</Typography>
+        <div style={{ display: 'flex', justifyContent: 'end' }}>
+          <Button
+            type='submit'
+            variant='contained'
+            color='primary'
+            onClick={() => {
+              fetchData({
+                subject: heading,
+                context: context !== null ? JSON.parse(context) : '',
+                intent: intent !== null ? JSON.parse(intent) : '',
+                audience: audience !== null ? JSON.parse(audience) : '',
+              })
+            }}
+            // disabled={loading}
+          >
+            {
+              // loading ? <CircularProgress size={24} /> :
+              'Know More'
+            }
+          </Button>
+        </div>
       </AccordionDetails>
     </Accordion>
   )

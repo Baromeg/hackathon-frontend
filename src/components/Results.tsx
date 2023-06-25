@@ -1,12 +1,20 @@
 import { FC, useState } from 'react'
 import { CustomAccordion } from './AccordionBlock'
 
+interface Input {
+  subject: string
+  context: string
+  intent: string
+  audience: string
+}
+
 interface ResultProps {
   response: {
     coveringPoints: string[]
     pointDetails: { [key: string]: string }
     realWorld: { [key: string]: string }
   }
+  fetchData: (input: Input) => Promise<void>
 }
 
 const Results: FC<ResultProps> = (props) => {
@@ -20,21 +28,22 @@ const Results: FC<ResultProps> = (props) => {
   const coveringPoints = props.response.coveringPoints
   const pointDetails = props.response.pointDetails
   const realWorld = props.response.realWorld
+  const fetchData = props.fetchData
 
   return (
     <div className='container'>
       <h3>Topics</h3>
 
-      {coveringPoints &&
-        Object.entries(pointDetails).map(([key, value]) => (
-          <CustomAccordion
-            expanded={expanded === key}
-            onClick={handleChange(key)}
-            heading={key}
-            content={value}
-            TypographyProps={{ variant: 'body1' }}
-          />
-        ))}
+      {Object.entries(pointDetails).map(([key, value]) => (
+        <CustomAccordion
+          expanded={expanded === key}
+          onClick={handleChange(key)}
+          heading={key}
+          content={value}
+          TypographyProps={{ variant: 'body1' }}
+          fetchData={fetchData}
+        />
+      ))}
       <h3>Real world examples</h3>
       {coveringPoints &&
         Object.entries(realWorld).map(([key, value]) => (
@@ -44,6 +53,7 @@ const Results: FC<ResultProps> = (props) => {
             heading={key}
             content={value}
             TypographyProps={{ variant: 'body1' }}
+            fetchData={fetchData}
           />
         ))}
     </div>
