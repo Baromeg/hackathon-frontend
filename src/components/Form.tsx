@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react'
+import { ChangeEvent } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import {
   RadioGroup,
@@ -7,8 +7,8 @@ import {
   FormControl,
   FormLabel,
   TextField,
-  Slider,
   Button,
+  CircularProgress,
 } from '@mui/material'
 
 type FormData = {
@@ -22,7 +22,7 @@ interface FormProps {
   handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void
 }
 // @ts-ignore: Unreachable code error
-const Form: FC<FormProps> = ({ handleInputChange }) => {
+const Form: FC<FormProps> = ({ handleInputChange, loading }) => {
   const { handleSubmit, control } = useForm<FormData>()
 
   const onSubmit = (data: FormData) => {
@@ -31,6 +31,7 @@ const Form: FC<FormProps> = ({ handleInputChange }) => {
 
   return (
     <div
+      className='container'
       style={{
         display: 'flex',
         justifyContent: 'center',
@@ -137,8 +138,13 @@ const Form: FC<FormProps> = ({ handleInputChange }) => {
           </FormControl>
         </div>
 
-        <Button type='submit' variant='contained' color='primary'>
-          Submit
+        <Button
+          type='submit'
+          variant='contained'
+          color='primary'
+          disabled={loading}
+        >
+          {loading ? <CircularProgress size={24} /> : 'Submit'}
         </Button>
       </form>
     </div>

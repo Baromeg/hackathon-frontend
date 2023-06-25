@@ -3,7 +3,7 @@ import { ThemeUIProvider } from 'theme-ui'
 
 import Chat from './components/Chat'
 // import Results from './components/Results'
-import { ThemeProvider, createTheme } from '@mui/material/styles'
+import { ThemeProvider } from '@mui/material/styles'
 // import { AnotherThemeProvider } from 'another-ui-library';
 import {
   createTheme as materialCreateTheme,
@@ -28,7 +28,7 @@ function App() {
   return (
     <ThemeUIProvider theme={themeUITheme}>
       <ThemeProvider theme={{ [THEME_ID]: materialTheme }}>
-        <div>
+        <div className='App'>
           <Chat />
           {/* <Results /> */}
         </div>
